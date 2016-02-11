@@ -1,0 +1,15 @@
+{
+  "name": "forwardjs-ml",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jed Borovik",
+  "license": "MIT",
+  "dependencies": {
+    "forwardjs-ml-math": "0.0.1",
+    "mnistjs": "0.0.3"
+  }
+}
