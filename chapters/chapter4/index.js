@@ -9,6 +9,7 @@ var testing = mnist.testing; // 10,000 testing samples
 var network = new Network(400, 25, 10);
 
 console.log('starting');
+console.time('total computation time:')
 var MAX_ITER = 10000;
 for (var iter = 0; iter < MAX_ITER; iter++) {
   var i = Math.floor(Math.random() * training.length);
@@ -22,7 +23,7 @@ for (var iter = 0; iter < MAX_ITER; iter++) {
   network.backwardError(outputError);
   network.updateWeights();
 
-  if (iter % 250 === 0) {
+  if (iter % 2500 === 0) {
     console.log('Training accuracy at iter %s: %s', iter, accuracy(training));
   }
 
@@ -30,6 +31,7 @@ for (var iter = 0; iter < MAX_ITER; iter++) {
 
 console.log('Training accuracy at iter %s: %s', MAX_ITER, accuracy(training));
 console.log('\nTest accuracy:', accuracy(testing));
+console.timeEnd('total computation time:')
 
 /**
  * @param {Array} data
