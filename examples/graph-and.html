@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      var data = [{
+        input: [0, 0],
+        output: 0,
+      },{
+        input: [0, 1],
+        output: 0,
+      },{
+        input: [1, 0],
+        output: 0,
+      },{
+        input: [1, 1],
+        output: 1,
+      }];
+
+      // Initial parameters.
+      var a = 3, b = -4, c = 2;
+
+      var stepSize = 1;
+
+      var z;
+      function and(x, y) {
+        z = a + b*x + c*y;
+        return sigmoid(z);
+      }
+
+      var iter = 0;
+      function iterate() {
+        // Change to 750 when stepSize = 0.1
+        if (iter > 1000) {
+          console.log('a', a);
+          console.log('b', b);
+          console.log('c', c);
+          return;
+        }
+        iter++;
+
+        // pick a random data point
+        var i = Math.floor(Math.random() * data.length);
+        var input = data[i].input;
+        var x = input[0];
+        var y = input[1];
+
+        var output = data[i].output;
+
+        // h for hypothesis
+        var h = and(x, y);
+
+        var error = h - output;
+
+        a -= error * 1 * sigmoidGradient(z) * stepSize;
+        b -= error * x * sigmoidGradient(z) * stepSize;
+        c -= error * y * sigmoidGradient(z) * stepSize;
+
+        if (iter % 25 === 0) console.log('accuracy at iter %s: %s', iter, trainingAccuracy());
+        draw();
+
+        setTimeout(iterate, 0);
+      }
+
+      iterate();
+
+
+      function trainingAccuracy() {
+        var correct = 0;
+        for (var i = 0; i < data.length; i++) {
+          var input = data[i].input;
+          var x = input[0];
+          var y = input[1];
+
+          var output = data[i].output;
+
+          var h = and(x, y) > 0.5 ? 1 : 0;
+          if (h === output) correct++;
+        }
+        return correct / data.length;
+      }
+
+      function draw() {
+        var t = {
+          x: [1],
+          y: [1],
+          mode: 'markers',
+          type: 'scatter',
+          marker: { size: 12 },
+          name: 'True',
+        };
+
+        var f = {
+          x: [0, 0, 1],
+          y: [0, 1, 0],
+          mode: 'markers',
+          type: 'scatter',
+          marker: { size: 12 },
+          name: 'False',
+        };
+
+        function yFn(x) {
+          var result = (-a  - (b*x)) / c;
+          if (c < 0) result *= -1;
+          return result;
+        }
+
+        var decision = {
+          x: [0, 1],
+          y: [yFn(0), yFn(1)],
+          type: 'scatter',
+          mode: 'lines',
+          name: 'Decision Boundary',
+        };
+
+        var opts = {
+          title: 'AND',
+          xaxis: {
+            range: [-0.5, 1.5],
+          },
+          yaxis: {
+            range: [-0.5, 1.5],
+          }
+        }
+        Plotly.newPlot('container', [t, f, decision], opts);
+      }
+
+      function sigmoid(z) {
+        return 1 / (1 + Math.exp(z * -1));
+      }
+
+      function sigmoidGradient(z) {
+        return sigmoid(z) * (1 - sigmoid(z));
+      }
+    </script>
+
+    </body>
+</html>
