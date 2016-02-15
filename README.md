@@ -19,3 +19,5 @@ There are examples using the code in `src` for classifying XOR and MNIST image d
 Andrew Ng's [Coursera class](https://www.coursera.org/learn/machine-learning/)
 
 Andrey Kurenkov's Brief History of Neural Networks and Deep Learning Parts [I](http://www.andreykurenkov.com/writing/a-brief-history-of-neural-nets-and-deep-learning/), [II](http://www.andreykurenkov.com/writing/a-brief-history-of-neural-nets-and-deep-learning-part-2/), [III](http://www.andreykurenkov.com/writing/a-brief-history-of-neural-nets-and-deep-learning-part-3/), and [IV](http://www.andreykurenkov.com/writing/a-brief-history-of-neural-nets-and-deep-learning-part-4/)
+
+[Kaggle](https://www.kaggle.com/)
